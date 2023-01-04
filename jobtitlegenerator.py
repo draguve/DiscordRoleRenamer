@@ -5,7 +5,7 @@ with open('words.json', 'r') as f:
     data = f.read()
 words = json.loads(data)
 
-def print_job_title():
+def get_job_title():
     adj1 = random.randrange(len(words['adjective1'])+20) # bias
     adj1 = min(adj1,8)
     adj2 = random.randrange(len(words['adjective2']))
@@ -20,15 +20,4 @@ def print_job_title():
     #     jobtitle += words['adjective3'][adj3].rstrip() + " "
     if words['position'][pos] != "":
         jobtitle += words['position'][pos].rstrip() + " "
-    print("Your new job title:")
-    print(jobtitle)
-
-resp = ""
-while True:
-    resp = input("Press ENTER to generate new job title, or type 'q' to quit: ")
-    if resp.lower() == "q":
-        print("Thank you for using Job Title Generator")
-        break
-    else:
-        print_job_title()
-        print("")
+    return jobtitle
