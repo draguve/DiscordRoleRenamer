@@ -1,6 +1,7 @@
 import discord
 import os
 from dotenv import load_dotenv
+from insult_generator import hit_me
 
 load_dotenv()
 
