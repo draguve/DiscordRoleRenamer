@@ -7,10 +7,13 @@ from discord.ext import tasks, commands
 
 load_dotenv()
 
-client = discord.Client(intents=discord.Intents.default())
+intents = discord.Intents.default()
+intents.members = True
+client = discord.Client(intents=intents)
 
 SERVER_ID = int(os.getenv("DRAGUVE_SERVERID"))
 ROLE_ID = int(os.getenv("DRAGUVE_ROLEID"))
+DAN_ID = int(os.getenv("DAN_ID"))
 
 
 class Renamer(commands.Cog):
@@ -21,14 +24,18 @@ class Renamer(commands.Cog):
     def cog_unload(self):
         self.renamer.cancel()
 
-    @tasks.loop(seconds=5.0)
+    @tasks.loop(hours=1.0)
     async def renamer(self):
-        print(self.index)
         server = client.get_guild(SERVER_ID)
         role = discord.utils.get(server.roles, id=ROLE_ID)
         role_name = f"{get_job_title()}Of Comedy"
-        await role.edit(name=role_name, reason="Because I Am")
-        print(f"changed role to {role_name}")
+        if role is not None:
+            await role.edit(name=role_name, reason="Because I Am")
+        dan_name = hit_me()
+        dan = server.get_member(DAN_ID)
+        # if dan is not None:
+        await dan.edit(nick=dan_name)
+        print(f"changed role to {role_name} and danny to {dan_name}")
         self.index += 1
 
 @client.event
