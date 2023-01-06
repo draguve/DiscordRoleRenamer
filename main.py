@@ -32,9 +32,11 @@ class Renamer(commands.Cog):
         if role is not None:
             await role.edit(name=role_name, reason="Because I Am")
         dan_name = hit_me()
+        while len(dan_name)>32:
+            dan_name = hit_me()
         dan = server.get_member(DAN_ID)
-        # if dan is not None:
-        await dan.edit(nick=dan_name)
+        if dan is not None:
+            await dan.edit(nick=dan_name)
         print(f"changed role to {role_name} and danny to {dan_name}")
         self.index += 1
 
